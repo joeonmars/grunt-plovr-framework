@@ -1,0 +1,46 @@
+/*
+ * Retina Sprites for Compass
+ * by:              Gaya Kessler
+ * last update:     01/14/13
+ *
+ * Usage:
+ * 1. create two folders in your image directory (in this case 'icons' and 'icons-2x').
+ * 2. adjust the foldernames defined below if you use different names.
+ * 3. create sprite images for pixel ratio 1 screens and put them in the first folder.
+ * 4. create sprite images for pixel ratio 2 screens and put them in the second folder, use the same filenames.
+ * 5. use the sprite-image in your Sass/Scss using: '@include use-sprite(<sprite-name>)'
+ */
+
+//first we'll define the folders where the sprites are and their layouts
+$icons: sprite-map("icons/*.png", $spacing: 4px, $layout: vertical);
+$icons-2x: sprite-map("icons-2x/*.png", $spacing: 4px, $layout: vertical);
+
+$ui: sprite-map("ui/*.png", $spacing: 4px, $layout: vertical);
+$ui-2x: sprite-map("ui-2x/*.png", $spacing: 4px, $layout: vertical);
+
+//Sprite mixin, works perfectly with standard defines
+@mixin use-sprite($name, $sprites, $sprites-2x) {
+    background-image: sprite-url($sprites);
+    background-position: sprite-position($sprites, $name);
+    background-repeat: no-repeat;
+    height: image-height(sprite-file($sprites, $name));
+    width: image-width(sprite-file($sprites, $name));
+    overflow: hidden;
+
+    @media (-webkit-min-device-pixel-ratio: 2), (-o-min-device-pixel-ratio: 3/2), (min-device-pixel-ratio: 2) {
+        background-image: sprite-url($sprites-2x);
+        background-size: (image-width(sprite-path($sprites-2x)) / 2) (image-height(sprite-path($sprites-2x)) / 2);
+        background-position: round(nth(sprite-position($sprites-2x, $name), 1) / 2) round(nth(sprite-position($sprites-2x, $name), 2) / 2);
+        height: image-height(sprite-file($sprites-2x, $name)) / 2;
+        width: image-width(sprite-file($sprites-2x, $name)) / 2;
+    }
+}
+
+@mixin retina-icon($name) {
+    @include use-sprite($name, $icons, $icons-2x);
+}
+
+
+@mixin retina-ui($name) {
+    @include use-sprite($name, $ui, $ui-2x);
+}

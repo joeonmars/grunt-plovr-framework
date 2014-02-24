@@ -1,0 +1,15 @@
+@import "global";
+
+body{
+	&:before{
+		content: "";
+		display: block;
+		@include retina-icon("joeonmars");
+	}
+	
+	&:after{
+		content: "FontAwesome \f001";
+		color: pink;
+		font-family: $font_awesome;
+	}
+}
