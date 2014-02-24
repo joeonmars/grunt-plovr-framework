@@ -145,6 +145,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-open');
 
   // Default task.
-  grunt.registerTask('default', ['compass', 'closureSoys', 'closureDepsWriter', 'watch', 'open:dev']);
+  grunt.registerTask('default', ['compass', 'closureSoys', 'closureDepsWriter', 'open:dev', 'watch']);
   grunt.registerTask('build', ['compass', 'closureSoys', 'closureBuilder', 'closureCompiler', 'open:release']);
 };
