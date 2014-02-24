@@ -1,5 +1,7 @@
-/node_modules
 /.sass-cache
+/node_modules
+/bower_components
+/source/assets/js/thirdparty/closure-library
 *.DS_Store
 *.sublime-workspace
 *.scssc

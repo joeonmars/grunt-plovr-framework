@@ -58,6 +58,7 @@ exports.template = function(grunt, init, done) {
         'grunt-contrib-compass': '~0.7.2',
         'grunt-contrib-watch': '~0.5.2',
         'grunt-open': '~0.2.3',
+        'grunt-bower-task': '~0.3.4',
       },
     });
 

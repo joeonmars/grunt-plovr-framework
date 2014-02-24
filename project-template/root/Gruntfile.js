@@ -9,6 +9,19 @@ module.exports = function(grunt) {
     outputJsDir: 'source/assets/js/output',
     closureDir: 'source/assets/js/thirdparty/closure-library',
 
+    bower: {
+      install: {
+        options: {
+          targetDir: '<%= thirdPartyJsDir %>',
+          install: true,
+          verbose: false,
+          cleanTargetDir: false,
+          cleanBowerDir: false,
+          bowerOptions: {}
+        },
+      }
+    },
+
     open : {
       dev : {
         path: '{%= devurl %}',
@@ -143,8 +156,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-closure-soy');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-open');
+  grunt.loadNpmTasks('grunt-bower-task');
 
   // Default task.
-  grunt.registerTask('default', ['compass', 'closureSoys', 'closureDepsWriter', 'open:dev', 'watch']);
+  grunt.registerTask('default', ['bower', 'compass', 'closureSoys', 'closureDepsWriter', 'open:dev', 'watch']);
   grunt.registerTask('build', ['compass', 'closureSoys', 'closureBuilder', 'closureCompiler', 'open:release']);
 };
