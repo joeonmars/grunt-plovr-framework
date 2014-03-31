@@ -1,15 +1,12 @@
 /*
- * grunt-plovr-framework-template
- * https://www.joeonmars.com/
- *
- * Copyright (c) 2013 "Cowboy" Ben Alman, contributors
- * Licensed under the MIT license.
+ * grunt-google-closure-framework-template
+ * By Joe Zhou | https://www.joeonmars.com/
  */
 
 'use strict';
 
 // Basic template description.
-exports.description = 'The project template for Grunt-Plovr-Framework';
+exports.description = 'The project template for Grunt-Google-Closure-Framework';
 
 // Template-specific notes to be displayed before question prompts.
 exports.notes = 'Lets to it!';
