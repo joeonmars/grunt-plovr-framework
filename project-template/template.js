@@ -54,8 +54,9 @@ exports.template = function(grunt, init, done) {
         'grunt-closure-soy': '~0.2.0',
         'grunt-contrib-compass': '~0.7.2',
         'grunt-contrib-watch': '~0.5.2',
+        "grunt-contrib-concat": "~0.4.0",
         'grunt-open': '~0.2.3',
-        'grunt-bower-task': '~0.3.4',
+        'grunt-bower-task': '~0.3.4'
       },
     });
 

@@ -69,6 +69,19 @@ module.exports = function(grunt) {
       },
     },
 
+    concat: {
+      thirdparty: {
+        src: [
+          '<%= thirdPartyJsDir %>/createjs/preloadjs-0.4.1.min.js',
+          '<%= thirdPartyJsDir %>/greensock/TweenMax.min.js',
+          '<%= thirdPartyJsDir %>/greensock/plugins/ScrollToPlugin.min.js',
+          '<%= thirdPartyJsDir %>/greensock/plugins/ThrowPropsPlugin.min.js',
+          '<%= thirdPartyJsDir %>/greensock/utils/Draggable.min.js'
+          ],
+        dest: '<%= outputJsDir %>/thirdparty.js'
+      }
+    },
+
     compass: {
       development: {
         options: {
@@ -128,10 +141,7 @@ module.exports = function(grunt) {
         checkModified: true,
         compilerOpts: {
            compilation_level: 'ADVANCED_OPTIMIZATIONS',//WHITESPACE_ONLY, SIMPLE_OPTIMIZATIONS, ADVANCED_OPTIMIZATIONS
-           externs: [
-           '<%= projectJsDir %>/externs.js',
-           '<%= thirdPartyJsDir %>/greensock/TweenMax.min.js'
-            ],
+           externs: ['<%= projectJsDir %>/externs.js'],
            define: ["'goog.DEBUG=false'"],
            warning_level: 'verbose',
            jscomp_off: ['checkTypes', 'fileoverviewTags'],
@@ -155,10 +165,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-closure-tools');
   grunt.loadNpmTasks('grunt-closure-soy');
   grunt.loadNpmTasks('grunt-contrib-compass');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-open');
   grunt.loadNpmTasks('grunt-bower-task');
 
   // Default task.
   grunt.registerTask('default', ['bower', 'compass', 'closureSoys', 'closureDepsWriter', 'open:dev', 'watch']);
-  grunt.registerTask('build', ['compass', 'closureSoys', 'closureBuilder', 'closureCompiler', 'open:release']);
+  grunt.registerTask('dev', ['compass', 'closureSoys', 'closureDepsWriter', 'open:dev', 'watch']);
+  grunt.registerTask('build', ['compass', 'closureSoys', 'closureBuilder', 'closureCompiler', 'concat', 'open:release']);
 };
