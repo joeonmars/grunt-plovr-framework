@@ -8,6 +8,7 @@ module.exports = function(grunt) {
     thirdPartyJsDir: 'source/assets/js/thirdparty',
     outputJsDir: 'source/assets/js/output',
     closureDir: 'source/assets/js/thirdparty/closure-library',
+    releaseDir: 'release',
 
     bower: {
       install: {
@@ -79,6 +80,27 @@ module.exports = function(grunt) {
           '<%= thirdPartyJsDir %>/greensock/utils/Draggable.min.js'
           ],
         dest: '<%= outputJsDir %>/thirdparty.js'
+      }
+    },
+
+    copy: {
+      release: {
+        files: [
+          // includes files within path
+          {expand: true, cwd: 'source/', src: [
+            '**',
+            '!assets/js/project/**',
+            '!assets/js/output/{%= namespace %}-build.js',
+            '!assets/js/output/{%= namespace %}-deps.js',
+            '!assets/js/thirdparty/**',
+            '!assets/styles/scss/**',
+            '!assets/soy/**',
+            '!assets/images/icons/*',
+            '!assets/images/icons-2x/*',
+            '!assets/images/ui/*',
+            '!assets/images/ui-2x/*'
+            ], dest: '<%= releaseDir %>', filter: 'isFile'},
+        ]
       }
     },
 
@@ -166,11 +188,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-closure-soy');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-open');
   grunt.loadNpmTasks('grunt-bower-task');
 
   // Default task.
   grunt.registerTask('default', ['bower', 'compass', 'closureSoys', 'closureDepsWriter', 'open:dev', 'watch']);
   grunt.registerTask('dev', ['compass', 'closureSoys', 'closureDepsWriter', 'open:dev', 'watch']);
-  grunt.registerTask('build', ['compass', 'closureSoys', 'closureBuilder', 'closureCompiler', 'concat', 'open:release']);
+  grunt.registerTask('release', ['compass', 'closureSoys', 'closureBuilder', 'closureCompiler', 'concat', 'copy', 'open:release']);
 };

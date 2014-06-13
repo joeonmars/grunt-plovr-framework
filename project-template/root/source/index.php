@@ -26,23 +26,39 @@
 	</head>
 
 	<body>
-		<!-- third-party -->
-		<script src="assets/js/thirdparty/createjs/preloadjs-0.4.1.min.js"></script>
-		<script src="assets/js/thirdparty/greensock/TweenMax.min.js"></script>
-		<script src="assets/js/thirdparty/greensock/plugins/ScrollToPlugin.min.js"></script>
-		<script src="assets/js/thirdparty/greensock/plugins/ThrowPropsPlugin.min.js"></script>
-		<script src="assets/js/thirdparty/greensock/utils/Draggable.min.js"></script>
 
-		<!-- project js -->
 		<?php
 			$USE_COMPILE_JS = false;
-			if (strpos(URLADDR,'dev.') == false && strpos(URLADDR,'local.') == false) {
+
+			$url = parse_url('{%= devurl %}')['host'];
+
+			if (strpos(URLADDR, $url) == false) {
 		    $USE_COMPILE_JS = true;
 			}
 			if (isset($_GET['compile'])) {
 				$USE_COMPILE_JS = true;
 			}
-			
+		?>
+
+		<!-- third-party -->
+		<?php
+			if($USE_COMPILE_JS == true) {
+				echo('
+					<script src="assets/js/output/thirdparty.js"></script>
+				');
+			}else {
+				echo('
+					<script src="assets/js/thirdparty/createjs/preloadjs-0.4.1.min.js"></script>
+					<script src="assets/js/thirdparty/greensock/TweenMax.min.js"></script>
+					<script src="assets/js/thirdparty/greensock/plugins/ScrollToPlugin.min.js"></script>
+					<script src="assets/js/thirdparty/greensock/plugins/ThrowPropsPlugin.min.js"></script>
+					<script src="assets/js/thirdparty/greensock/utils/Draggable.min.js"></script>
+				');
+			}
+		?>
+
+		<!-- project js -->
+		<?php
 			if($USE_COMPILE_JS == true) {
 				echo('
 					<script src="assets/js/output/{%= namespace %}-compiled.js"></script>
