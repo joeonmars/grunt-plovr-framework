@@ -52,12 +52,14 @@ exports.template = function(grunt, init, done) {
         'grunt': '~0.4.2',
         'grunt-closure-tools': '~0.9.2',
         'grunt-closure-soy': '~0.2.0',
-        'grunt-contrib-compass': '~0.7.2',
+        'grunt-contrib-compass': '~0.8.0',
         'grunt-contrib-watch': '~0.5.2',
-        "grunt-contrib-concat": "~0.4.0",
-        "grunt-contrib-copy": "~0.4.0",
+        'grunt-contrib-concat': "~0.4.0",
+        'grunt-contrib-copy': "~0.4.0",
+        "grunt-contrib-clean": "~0.4.0",
         'grunt-open': '~0.2.3',
-        'grunt-bower-task': '~0.3.4'
+        'grunt-bower-task': '~0.4.0',
+        'grunt-webfont': '~0.4.0'
       },
     });
 

@@ -57,7 +57,7 @@ module.exports = function(grunt) {
         },
       },
       scss: {
-        files: ['source/assets/styles/scss/*.scss'],
+        files: ['source/assets/styles/scss/**/*.scss'],
         tasks: ['compass']
       },
       css: {
@@ -68,6 +68,10 @@ module.exports = function(grunt) {
           spawn: false,
         },
       },
+      svg: {
+        files: ['source/assets/styles/fonts/fontcustom/icons/*.svg'],
+        tasks: ['webfont']
+      }
     },
 
     concat: {
@@ -81,6 +85,10 @@ module.exports = function(grunt) {
           ],
         dest: '<%= outputJsDir %>/thirdparty.js'
       }
+    },
+
+    clean: {
+      release: ["<%= releaseDir %>/**/*", "!<%= releaseDir %>/deleteme"]
     },
 
     copy: {
@@ -120,6 +128,25 @@ module.exports = function(grunt) {
           environment: 'development'
         }
       },
+    },
+
+    webfont: {
+      icons: {
+        src: 'source/assets/styles/fonts/fontcustom/icons/*.svg',
+        dest: 'source/assets/styles/fonts/fontcustom',
+        destCss: 'source/assets/styles/scss',
+        options: {
+          stylesheet: 'scss',
+          htmlDemo: true,
+          hashes: true,
+          engine: 'node',
+          templateOptions: {
+            baseClass: 'icon',
+            classPrefix: 'icon-',
+            mixinPrefix: 'icon-'
+          }
+        }
+      }
     },
 
     closureSoys: {
@@ -186,14 +213,48 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-closure-tools');
   grunt.loadNpmTasks('grunt-closure-soy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-open');
+  grunt.loadNpmTasks('grunt-webfont');
   grunt.loadNpmTasks('grunt-bower-task');
 
   // Default task.
-  grunt.registerTask('default', ['bower', 'compass', 'closureSoys', 'closureDepsWriter', 'open:dev', 'watch']);
-  grunt.registerTask('dev', ['compass', 'closureSoys', 'closureDepsWriter', 'open:dev', 'watch']);
-  grunt.registerTask('release', ['compass', 'closureSoys', 'closureBuilder', 'closureCompiler', 'concat', 'copy', 'open:release']);
+  grunt.registerTask('default', [
+    'bower',
+    'compass',
+    'webfont',
+    'closureSoys',
+    'closureDepsWriter',
+    'open:dev',
+    'watch']);
+
+  grunt.registerTask('dev', [
+    'compass',
+    'webfont',
+    'closureSoys',
+    'closureDepsWriter',
+    'open:dev',
+    'watch']);
+
+  grunt.registerTask('build', [
+    'compass',
+    'webfont',
+    'closureSoys',
+    'closureBuilder',
+    'closureCompiler',
+    'concat']);
+
+  grunt.registerTask('release', [
+    'compass',
+    'webfont',
+    'closureSoys',
+    'closureBuilder',
+    'closureCompiler',
+    'concat',
+    'clean:release',
+    'copy',
+    'open:release']);
 };
